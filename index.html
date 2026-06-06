@@ -277,38 +277,37 @@
             <h2 class="section-title">Бронирование <span>стола</span></h2>
             <div class="booking-container">
                 <!-- ВНИМАНИЕ: Замени "YOUR_FORM_ID" ниже на свой ID из Formspree после регистрации -->
-                <form class="form-grid" action="https://formspree.io/f/xgoqdngn" method="POST">
-                    <input type="hidden" name="_subject" value="Новая бронь стола в баре!">
-                    <div>
-                        <label>Ваше имя</label>
-                        <input type="text" name="Имя" placeholder="Иван Иванович" required>
-                    </div>
-                    <div>
-                        <label>Телефон</label>
-                        <input type="tel" name="Телефон" placeholder="+7 (900) 000-00-00" required>
-                    </div>
-                    <div>
-                        <label>Дата</label>
-                        <input type="date" name="Дата" required>
-                    </div>
-                    <div>
-                        <label>Время</label>
-                        <input type="time" name="Время" required>
-                    </div>
-                    <div class="full">
-                        <label>Количество гостей</label>
-                        <select name="Гостей">
-                            <option>2 человека</option>
-                            <option>3-4 человека</option>
-                            <option>5-6 человек</option>
-                            <option>Большая компания (10+)</option>
-                        </select>
-                    </div>
-                    <div class="full">
-                        <label>Пожелания (необязательно)</label>
-                        <textarea name="Комментарий" rows="3" placeholder="Например: столик у окна или юбилей"></textarea>
-                    </div>
-                    <button type="submit" class="btn btn-red full">Забронировать сейчас</button>
+                <form class="form-grid" id="booking-form">
+    <div>
+        <label>Ваше имя</label>
+        <input type="text" name="Имя" placeholder="Иван Иванович" required>
+    </div>
+    <div>
+        <label>Телефон</label>
+        <input type="tel" name="Телефон" placeholder="+7 (900) 000-00-00" required>
+    </div>
+    <div>
+        <label>Дата</label>
+        <input type="date" name="Дата" required>
+    </div>
+    <div>
+        <label>Время</label>
+        <input type="time" name="Время" required>
+    </div>
+    <div class="full">
+        <label>Количество гостей</label>
+        <select name="Гостей">
+            <option>2 человека</option>
+            <option>3-4 человека</option>
+            <option>5-6 человек</option>
+            <option>Большая компания (10+)</option>
+        </select>
+    </div>
+    <div class="full">
+        <label>Пожелания (необязательно)</label>
+        <textarea name="Комментарий" rows="3" placeholder="Например: столик у окна или юбилей"></textarea>
+    </div>
+    <button type="submit" class="btn btn-red full" id="booking-submit-btn">Забронировать сейчас</button>
                 </form>
             </div>
         </div>
@@ -365,17 +364,15 @@
 
             <!-- Форма отправки заказа на Formspree -->
             <!-- ВНИМАНИЕ: Замени "YOUR_FORM_ID" на тот же самый ID из Formspree -->
-            <form action="https://formspree.io/f/xgoqdngn" method="POST" id="checkout-form" onsubmit="prepareCheckoutData()">
-                <input type="hidden" name="_subject" value="Новый заказ НА ДОСТАВКУ/ВЫНОС!">
-                <input type="hidden" name="Состав_Заказа" id="hidden-cart-data">
-                <input type="hidden" name="Итоговая_Сумма" id="hidden-cart-total">
-                <div style="margin-bottom: 12px;">
-                    <input type="text" name="Клиент_Имя" placeholder="Ваше имя" required style="padding: 8px;">
-                </div>
-                <div style="margin-bottom: 15px;">
-                    <input type="tel" name="Клиент_Телефон" placeholder="Телефон для подтверждения" required style="padding: 8px;">
-                </div>
-                <button type="submit" class="btn btn-red" style="width:100%; color: white;">Оформить заказ</button>
+  <form id="checkout-form">
+    <div style="margin-bottom: 12px;">
+        <input type="text" name="Клиент_Имя" placeholder="Ваше имя" required style="padding: 8px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <input type="tel" name="Клиент_Телефон" placeholder="Телефон для подтверждения" required style="padding: 8px;">
+    </div>
+    <button type="submit" class="btn btn-red" id="checkout-submit-btn" style="width:100%; color: white;">Оформить заказ</button>
+</form>
             </form>
         </div>
     </div>
@@ -655,6 +652,99 @@
         window.onload = function() {
             renderMenu();
         };
-    </script>
+    <script>
+const BOT_TOKEN = '8711192821:AAGv2896xFuGVYSIM-dOCvIaCtpv5Z7nFvs';
+const CHAT_ID = '-7439163881'; // <- Сюда впишите ID вашей группы (с минусом)
+
+// 1. ОБРАБОТКА БРОНИРОВАНИЯ СТОЛА
+document.getElementById('booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('booking-submit-btn');
+    const formData = new FormData(this);
+    
+    btn.disabled = true;
+    btn.innerText = 'Отправка...';
+
+    let text = `📅 *НОВАЯ БРОНЬ СТОЛА*\n\n`;
+    text += `👤 *Имя:* ${formData.get('Имя')}\n`;
+    text += `📞 *Телефон:* ${formData.get('Телефон')}\n`;
+    text += `📆 *Дата:* ${formData.get('Дата')}\n`;
+    text += `⏰ *Время:* ${formData.get('Время')}\n`;
+    text += `👥 *Гости:* ${formData.get('Гостей')}\n`;
+    if(formData.get('Комментарий')) {
+        text += `💬 *Пожелания:* ${formData.get('Комментарий')}\n`;
+    }
+
+    sendTelegram(text, btn, 'Забронировать сейчас', this);
+});
+
+// 2. ОБРАБОТКА ЗАКАЗА ИЗ КОРЗИНЫ
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('checkout-submit-btn');
+    const formData = new FormData(this);
+    
+    // Вытаскиваем данные о составе заказа и сумме из ваших существующих функций/переменных корзины
+    // (Скрипт автоматически подхватит текст, если данные лежат в блоках корзины)
+    const cartItemsText = document.getElementById('hidden-cart-data')?.value || 'См. состав в корзине на сайте';
+    const cartTotalValue = document.getElementById('hidden-cart-total')?.value || 'Не указана';
+
+    btn.disabled = true;
+    btn.innerText = 'Отправка...';
+
+    let text = `🔥 *НОВЫЙ ЗАКАЗ ЕДЫ*\n\n`;
+    text += `👤 *Клиент:* ${formData.get('Клиент_Имя')}\n`;
+    text += `📞 *Телефон:* ${formData.get('Клиент_Телефон')}\n`;
+    text += `───────────────────\n`;
+    text += `📦 *Состав заказа:*\n${cartItemsText}\n`;
+    text += `───────────────────\n`;
+    text += `💰 *Итоговая сумма:* ${cartTotalValue}\n`;
+
+    // Если у вас на сайте есть функция сбора данных (например prepareCheckoutData), запускаем её
+    if (typeof prepareCheckoutData === "function") { 
+        prepareCheckoutData(); 
+    }
+
+    sendTelegram(text, btn, 'Оформить заказ', this);
+});
+
+// ФУНКЦИЯ ОТПРАВКИ В TELEGRAM
+function sendTelegram(text, button, originalText, form) {
+    const url = `https://api.telegram.org/bot${8711192821:AAGv2896xFuGVYSIM-dOCvIaCtpv5Z7nFvs}/sendMessage`;
+    
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: -7439163881,
+            text: text,
+            parse_mode: 'Markdown'
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            button.innerText = 'Успешно отправлено!';
+            button.style.backgroundColor = '#28a745'; // Кнопка станет зеленой
+            form.reset();
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerText = originalText;
+                button.style.backgroundColor = ''; // Возвращаем исходный цвет кнопки
+            }, 4000);
+        } else {
+            alert('Ошибка отправки. Попробуйте еще раз или свяжитесь по телефону.');
+            button.disabled = false;
+            button.innerText = originalText;
+        }
+    })
+    .catch(() => {
+        alert('Ошибка сети. Проверьте интернет-соединение.');
+        button.disabled = false;
+        button.innerText = originalText;
+    });
+}
+</script>
 </body>
 </html>
