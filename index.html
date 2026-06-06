@@ -365,6 +365,8 @@
             <!-- Форма отправки заказа на Formspree -->
             <!-- ВНИМАНИЕ: Замени "YOUR_FORM_ID" на тот же самый ID из Formspree -->
   <form id="checkout-form">
+    <input type="hidden" name="Состав_Заказа" id="hidden-cart-data">
+    <input type="hidden" name="Итоговая_Сумма" id="hidden-cart-total">
     <div style="margin-bottom: 12px;">
         <input type="text" name="Клиент_Имя" placeholder="Ваше имя" required style="padding: 8px;">
     </div>
@@ -373,7 +375,6 @@
     </div>
     <button type="submit" class="btn btn-red" id="checkout-submit-btn" style="width:100%; color: white;">Оформить заказ</button>
 </form>
-            </form>
         </div>
     </div>
 
