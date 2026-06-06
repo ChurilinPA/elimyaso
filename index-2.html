@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ели Мясо Мужики | Официальный сайт | Самара</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --irish-green: #0b311e;  /* Глубокий пабный темно-зеленый */
+            --light-bg: #fdfcf9;     /* Светлый мягкий фон (цвет пергамента) */
+            --card-white: #ffffff;   /* Чистый белый для карточек */
+            --text-gold: #c5a059;    /* Твое фирменное золото */
+            --dark-text: #151f1a;    /* Очень темный зеленый/черный для текста */
+            --text-muted: #5a6961;   /* Приглушенный текст для описания блюд */
+            --border-color: #e3ebe7; /* Аккуратные светлые рамки */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3 { font-family: 'Oswald', sans-serif; text-transform: uppercase; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* HEADER */
+        header {
+            height: 80vh;
+            background: linear-gradient(rgba(11, 49, 30, 0.8), rgba(11, 49, 30, 0.85)),
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1469') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-bottom: 5px solid var(--text-gold);
+        }
+
+        .logo-area h1 { font-size: clamp(3rem, 10vw, 6rem); color: white; line-height: 1; }
+        .logo-area span { color: var(--text-gold); }
+        .subtitle { font-size: 1.2rem; letter-spacing: 5px; margin: 20px 0 40px; color: white; opacity: 0.9; }
+
+        .header-btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
+
+        .btn {
+            padding: 15px 35px;
+            text-decoration: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            transition: 0.3s;
+            border-radius: 5px;
+            font-family: 'Oswald', sans-serif;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .btn-red { background: var(--text-gold); color: #000; border: none; }
+        .btn-red:hover { background: #b08d4b; }
+        .btn-outline { border: 2px solid white; color: white; background: transparent; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3); }
+
+        /* STICKY NAV */
+        nav.main-nav {
+            position: sticky;
+            top: 0;
+            background: var(--irish-green);
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--text-gold);
+        }
+        .nav-content { display: flex; justify-content: space-between; align-items: center; }
+        .nav-content div { color: white; }
+        .nav-links { display: flex; flex-wrap: wrap; justify-content: flex-end; }
+        .nav-links a { color: white; text-decoration: none; margin-left: 20px; font-size: 0.9rem; text-transform: uppercase; font-family: 'Oswald'; }
+        .nav-links a:hover { color: var(--text-gold); }
+
+        /* MENU SECTION */
+        .section { padding: 80px 0; }
+        .section-title { text-align: center; font-size: 3rem; margin-bottom: 50px; color: var(--irish-green); }
+        .section-title span { color: var(--text-gold); }
+
+        .category-block { margin-bottom: 60px; }
+        .category-name {
+            font-size: 2rem;
+            color: var(--irish-green);
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--text-gold);
+            padding-bottom: 10px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .menu-card {
+            background: var(--card-white);
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: 0.3s;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        .menu-card:hover { border-color: var(--irish-green); background: #f7fcf9; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(11, 49, 30, 0.06); }
+
+        .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
+        .item-name { font-weight: bold; font-size: 1.2rem; color: var(--dark-text); padding-right: 10px; }
+        .item-price { color: var(--irish-green); font-weight: bold; font-size: 1.2rem; white-space: nowrap; }
+        .item-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; }
+        .item-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #eee; display: none; }
+        .item-img.active { display: block; }
+
+        .btn-add {
+            background: transparent;
+            border: 2px solid var(--irish-green);
+            color: var(--irish-green);
+            width: 100%;
+            padding: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            text-transform: uppercase;
+            border-radius: 5px;
+            transition: 0.2s;
+        }
+        .btn-add:hover { background: var(--irish-green); color: white; }
+
+        /* BOOKING FORM */
+        #booking { background: #f2efe7; border-top: 1px solid var(--border-color); }
+        .booking-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .full { grid-column: span 2; }
+        label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--irish-green); font-weight: bold; }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            background: #fafafa;
+            border: 1px solid var(--border-color);
+            color: var(--dark-text);
+            border-radius: 5px;
+        }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--irish-green); }
+        .booking-container .btn-red { color: white; width: 100%; font-size: 1.1rem; }
+        .booking-container .btn-red:hover { background: #b08d4b; }
+
+        /* FOOTER */
+        footer { background: var(--irish-green); padding: 60px 0; border-top: 5px solid var(--text-gold); }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .footer-logo h2 { color: white; margin-bottom: 15px; }
+        .footer-logo span { color: var(--text-gold); }
+        .footer-logo p { color: #e3ebe7; }
+        .footer-info h3 { color: var(--text-gold); margin-bottom: 15px; }
+        .footer-info p { margin-bottom: 10px; color: #e3ebe7; }
+
+        /* CART FLOATING BUTTON & BADGE */
+        .cart-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--irish-green);
+            border: 2px solid var(--text-gold);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            cursor: pointer;
+            z-index: 100;
+            transition: 0.3s;
+        }
+        .cart-btn:hover { background: var(--text-gold); transform: scale(1.05); }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #d9534f;
+            color: white;
+            border-radius: 50%;
+            padding: 3px 8px;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: sans-serif;
+        }
+
+        /* CART MODAL WINDOW */
+        .cart-modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        .cart-modal.active { display: flex; }
+        .cart-window {
+            background: white;
+            width: 90%;
+            max-width: 550px;
+            max-height: 85vh;
+            border-radius: 12px;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .cart-header-modal { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid var(--border-color); padding-bottom: 10px; }
+        .cart-close { font-size: 28px; cursor: pointer; color: var(--text-muted); }
+        .cart-close:hover { color: black; }
+        .cart-items-list { overflow-y: auto; flex-grow: 1; margin-bottom: 20px; padding-right: 5px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--border-color); }
+        .cart-item-info { flex-grow: 1; padding-right: 15px; }
+        .cart-item-title { font-weight: bold; font-size: 1rem; }
+        .cart-item-controls { display: flex; align-items: center; gap: 10px; }
+        .cart-qty-btn { background: #eee; border: none; width: 25px; height: 25px; cursor: pointer; font-weight: bold; border-radius: 4px; }
+        .cart-qty-btn:hover { background: var(--text-gold); }
+        .cart-total-price { font-size: 1.3rem; font-family: 'Oswald'; text-align: right; margin-bottom: 20px; font-weight: bold; }
+        
+        @media (max-width: 768px) {
+            .form-grid { grid-template-columns: 1fr; }
+            .full { grid-column: span 1; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="home">
+        <div class="logo-area">
+            <h1>ЕЛИ <span>МЯСО</span> МУЖИКИ</h1>
+            <p class="subtitle">ГРИЛЬ-БАР С ХАРАКТЕРОМ • ЛУЧШЕЕ МЯСО В ГОРОДЕ САМАРА •</p>
+        </div>
+        <div class="header-btns">
+            <a href="#menu" class="btn btn-red">Посмотреть меню</a>
+            <a href="#booking" class="btn btn-outline">Забронировать стол</a>
+        </div>
+    </header>
+
+    <nav class="main-nav">
+        <div class="container nav-content">
+            <div style="font-family: 'Oswald'; font-weight: bold; font-size: 1.2rem;">ЕЛИ <span style="color:var(--text-gold)">МЯСО</span> МУЖИКИ</div>
+            <div class="nav-links">
+                <a href="#home">Главная</a>
+                <a href="#menu">Menu</a>
+                <a href="#booking">Бронь</a>
+                <a href="#contacts">Контакты</a>
+            </div>
+        </div>
+    </nav>
+
+    <section id="menu" class="section container">
+        <h2 class="section-title">Наше <span>Меню</span></h2>
+        <div id="menu-container">
+            <!-- Меню генерируется автоматически из JavaScript -->
+        </div>
+    </section>
+
+    <section id="booking" class="section">
+        <div class="container">
+            <h2 class="section-title">Бронирование <span>стола</span></h2>
+            <div class="booking-container">
+                <!-- ВНИМАНИЕ: Замени "YOUR_FORM_ID" ниже на свой ID из Formspree после регистрации -->
+                <form class="form-grid" id="booking-form">
+    <div>
+        <label>Ваше имя</label>
+        <input type="text" name="Имя" placeholder="Иван Иванович" required>
+    </div>
+    <div>
+        <label>Телефон</label>
+        <input type="tel" name="Телефон" placeholder="+7 (900) 000-00-00" required>
+    </div>
+    <div>
+        <label>Дата</label>
+        <input type="date" name="Дата" required>
+    </div>
+    <div>
+        <label>Время</label>
+        <input type="time" name="Время" required>
+    </div>
+    <div class="full">
+        <label>Количество гостей</label>
+        <select name="Гостей">
+            <option>2 человека</option>
+            <option>3-4 человека</option>
+            <option>5-6 человек</option>
+            <option>Большая компания (10+)</option>
+        </select>
+    </div>
+    <div class="full">
+        <label>Пожелания (необязательно)</label>
+        <textarea name="Комментарий" rows="3" placeholder="Например: столик у окна или юбилей"></textarea>
+    </div>
+    <button type="submit" class="btn btn-red full" id="booking-submit-btn">Забронировать сейчас</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <footer id="contacts">
+        <div class="container footer-content">
+            <div class="footer-logo">
+                <h2>ЕЛИ <span>МЯСО</span> МУЖИКИ</h2>
+                <p>Гриль-бар для настоящих ценителей мяса и огня.</p>
+            </div>
+            <div class="footer-info">
+                <h3>Контакты</h3>
+                <p>📍 г. Самара, ул. Ульяновская, 46</p>
+                <p>📞 +7 (927) 692-23-50</p>
+                <p>✉️ <a href="mailto:yelimyaso@mail.ru" style="color: #fff; text-decoration: underline;">yelimyaso@mail.ru</a></p>
+            </div>
+            <div class="footer-info">
+                <h3>Режим работы</h3>
+                <p>Пн - Чт: 12:00 — 22:00</p>
+                <p>Пт - Вс: 12:00 — 00:00</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px; color: #81968d; border-top: 1px solid #14402a; padding-top: 20px;">
+            &copy; 2026 Гриль-бар "Ели Мясо Мужики". Все права защищены.
+        </div>
+    </footer>
+
+    <!-- ПЛАВАЮЩАЯ КНОПКА КОРЗИНЫ -->
+    <div class="cart-btn" onclick="toggleCartModal(true)">
+        <span style="font-size: 24px;">🛒</span>
+        <div class="cart-count" id="cart-count">0</div>
+    </div>
+
+    <!-- МОДАЛЬНОЕ ОКНО КОРЗИНЫ -->
+    <div class="cart-modal" id="cart-modal" onclick="if(event.target === this) toggleCartModal(false)">
+        <div class="cart-window">
+            <div class="cart-header-modal">
+                <h3 style="font-family: 'Oswald'; font-size: 1.5rem;">Ваш заказ</h3>
+                <span class="cart-close" onclick="toggleCartModal(false)">&times;</span>
+            </div>
+            <!-- ФРАЗА ПРО БЕСПЛАТНУЮ ДОСТАВКУ -->
+            <div style="background: #e3ebe7; color: var(--irish-green); padding: 10px; border-radius: 5px; text-align: center; font-size: 0.9rem; font-weight: bold; margin-bottom: 15px;">
+                🚚 Бесплатная доставка при сумме заказа от 3000₽
+                
+            </div>
+            <div class="cart-items-list" id="cart-items-container">
+                <!-- Сюда JS добавляет выбранные товары -->
+            </div>
+
+            <div class="cart-total-price">
+                Итого: <span id="cart-total-sum">0</span>₽
+            </div>
+
+            <!-- Форма отправки заказа на Formspree -->
+            <!-- ВНИМАНИЕ: Замени "YOUR_FORM_ID" на тот же самый ID из Formspree -->
+  <form id="checkout-form">
+    <input type="hidden" name="Состав_Заказа" id="hidden-cart-data">
+    <input type="hidden" name="Итоговая_Сумма" id="hidden-cart-total">
+    <div style="margin-bottom: 12px;">
+        <input type="text" name="Клиент_Имя" placeholder="Ваше имя" required style="padding: 8px;">
+    </div>
+    <div style="margin-bottom: 15px;">
+        <input type="tel" name="Клиент_Телефон" placeholder="Телефон для подтверждения" required style="padding: 8px;">
+    </div>
+    <button type="submit" class="btn btn-red" id="checkout-submit-btn" style="width:100%; color: white;">Оформить заказ</button>
+</form>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // БЛОК ДЛЯ РЕДАКТИРОВАНИЯ ЦЕН И ФОТОГРАФИЙ
+        // ==========================================
+        // Чтобы изменить цену, просто поменяй число в поле price.
+        // Чтобы добавить фото, вставь ссылку на картинку в одинарные кавычки в поле img.
+        const MENU_DATA = [
+                {
+                category: "Шашлык с собой",
+                items: [
+                    { id: 1, name: 'Свиные ребра', price: 1650, desc: '(1000 гр)', img: '' },
+                    { id: 2, name: 'Свиная корейка', price: 1590, desc: '(1000 гр)', img: '' },
+                    { id: 3, name: 'Шашлык из свиной шеи', price: 2130, desc: '(1000 гр)', img: '' },
+                    { id: 4, name: 'Шашлык из свиной вырезки', price: 2130, desc: '(1000 гр)', img: '' },
+                    { id: 5, name: 'Шашлык из курицы', price: 1200, desc: '(1000 гр)', img: '' },
+                    { id: 6, name: 'Шашлык из индейки(бедро)', price: 2160, desc: '(1000 гр)', img: '' },
+                    { id: 7, name: 'Люля-кебаб из курицы', price: 1450, desc: '(1000 гр)', img: '' },
+                    { id: 8, name: 'Люля-кебаб из говядины', price: 1700, desc: '(1000 гр)', img: '' },
+                    { id: 9, name: 'Люля-кебаб из баранины', price: 1900, desc: '(1000 гр)', img: '' },
+                    { id: 10, name: 'Говяжья печень в жировой сетке', price: 1800, desc: '(1000 гр)', img: '' },
+                    { id: 11, name: 'Баранья мякать', price: 3000, desc: '(1000 гр)', img: '' },
+                    { id: 12, name: 'Каре из баранины', price: 3900, desc: '(1000 гр)', img: '' }
+                ]   
+            },
+            {
+                category: "Фирменные блюда",
+                items: [
+                    { id: 13, name: 'Мясной сет "Ели мясо мужики"', price: 3290, desc: 'Шашлык свиной (шея), ребра свиные, люля-кебаб говядина, люля-кебаб куриный, грибы-гриль, картофель-гриль, овощи-гриль, соус Сацебели, соус Цехтон, соус кисло-сладкий, лаваш, лук, зелень. (1550 гр)', img: '' },
+                    { id: 14, name: 'Пивной сет "Пивом запивали"', price: 2590, desc: 'Крылья куриные «огненные», луковые кольца, гренки, сыр косичка, сыр паутинка, сырные палочки, охотничьи колбаски, соус сладкий чили, соус цехтон, соус горчичный. (810 гр)', img: '' }
+                ]
+            },
+            {
+                category: "Холодные закуски",
+                items: [
+                    { id: 15, name: 'Овощная тарелка', price: 430, desc: 'Помидор, огурец, болгарский перец, зелень. (300 гр)', img: '' },
+                    { id: 16, name: 'Соленья', price: 430, desc: 'Помидор сол., огурец сол., перец маринованный, капуста квашеная. (280 гр)', img: '' },
+                    { id: 17, name: 'Семга слабосоленая', price: 980, desc: 'Семга, лимон, маслины, оливки, зелень. (150 гр)', img: '' },
+                    { id: 18, name: 'Сало домашнее с Бородинским хлебом', price: 450, desc: 'Горчица, хрен. (100/60 гр)', img: '' },
+                    { id: 19, name: 'Брынза', price: 440, desc: '(200 гр)', img: '' },
+                    { id: 20, name: 'Зелень', price: 270, desc: '(50 гр)', img: '' }              
+                ]
+            },
+            {
+                category: "Салаты",
+                items: [
+                    { id: 21, name: 'Салат Летний', price: 340, desc: 'Помидор, огурец свежий, зелень, лук. (220 гр)', img: '' },
+                    { id: 22, name: 'Салат Греческий', price: 410, desc: 'Помидор, огурец свежий, зелень, лук, фетакса, маслины (220 гр)', img: '' }
+                ]
+            },
+            {
+                category: "Супы",
+                items: [
+                    { id: 23, name: 'Суп куриный с лапшой', price: 310, desc: '(300 гр)', img: '' },
+                    { id: 24, name: 'Солянка мясная сборная', price: 410, desc: '(300 гр)', img: '' },
+                    { id: 25, name: 'Харчо с говядиной', price: 410, desc: '(300 гр)', img: '' },
+                    { id: 26, name: 'Уха по-царски', price: 490, desc: 'Сёмга, картофель, помидор, лук. (300 гр)', img: '' },
+                    { id: 27, name: 'Суп гороховый с копчёностями', price: 410, desc: '(300 гр)', img: '' },
+                    { id: 28, name: 'Борщ', price: 410, desc: '(300 гр)', img: '' }               
+                ]
+            },
+            {
+                category: "Гриль",
+                items: [
+                    { id: 29, name: 'Свиные ребрышки гриль', price: 550, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 30, name: 'Свиная корейка', price: 590, desc: 'На кости, лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 31, name: 'Стейк из свинины', price: 630, desc: 'Шея, лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 32, name: 'Стейк из мраморной говядины', price: 600, desc: 'Цена указана за 100 гр.', img: '' },
+                    { id: 33, name: 'Креветки гриль', price: 780, desc: 'Тигровые. (150 гр)', img: '' },
+                    { id: 34, name: 'Скумбрия на гриле', price: 680, desc: 'Лимон, оливки, маслины. (300-400 гр)', img: '' },
+                    { id: 35, name: 'Стейк из семги', price: 990, desc: 'Лаваш, лимон. (180 гр)', img: '' },
+                    { id: 36, name: 'Картофель на углях', price: 250, desc: '(150 гр)', img: '' },
+                    { id: 37, name: 'Грибы на углях', price: 370, desc: '(150 гр)', img: '' },
+                    { id: 38, name: 'Овощи-гриль', price: 370, desc: '(200 гр)', img: '' }
+                ]
+            },
+            {
+                category: "Шашлык",
+                items: [
+                    { id: 39, name: 'Шашлык из свинины (шея мякоть)', price: 610, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 40, name: 'Шашлык из свинины (вырезка)', price: 640, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 41, name: 'Шашлык из курицы (филе)', price: 540, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 42, name: 'Шашлык из индейки (филе бедра)', price: 640, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 43, name: 'Шашлык из баранины (мякоть)', price: 1090, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 44, name: 'Люля-кебаб из курицы', price: 450, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 45, name: 'Люля-кебаб из говядины', price: 550, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 46, name: 'Люля-кебаб из баранины', price: 690, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 47, name: 'Каре ягненка', price: 1250, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' },
+                    { id: 48, name: 'Печень говяжья в жировой сетке', price: 630, desc: 'Лаваш, лук, зелень. (200/30 гр)', img: '' }
+                ]
+            },
+            {
+                category: "Вторые горячие блюда",
+                items: [
+                    { id: 49, name: 'Пельмени домашние', price: 310, desc: 'Говяжьи, со сметаной. (200/30 гр)', img: '' },
+                    { id: 50, name: 'Долма', price: 430, desc: 'Говяжья, со сметаной. (200/30 гр)', img: '' },
+                    { id: 51, name: 'Хинкали (1 шт)', price: 90, desc: 'Баранина.', img: '' }
+                ]
+            },
+            {
+                category: "Гарниры",
+                items: [
+                    { id: 52, name: 'Картошка фри', price: 250, desc: '(140 гр)', img: '' },
+                    { id: 53, name: 'Картофель Айдахо', price: 250, desc: '(140 гр)', img: '' },
+                    { id: 54, name: 'Картофельные дольки', price: 250, desc: '(140 гр)', img: '' },
+                    { id: 55, name: 'Картофель жареный с грибами', price: 260, desc: '(160 гр)', img: '' }
+                ]
+            },
+            {
+                category: "Выпечка и Хлеб",
+                items: [
+                    { id: 56, name: 'Хачапури с сыром', price: 530, desc: '(375 гр)', img: '' },
+                    { id: 57, name: 'Хачапури по-Аджарски', price: 560, desc: 'Лодочка с яйцом. (375 гр)', img: '' },
+                    { id: 58, name: 'Лепешка', price: 180, desc: 'Целая домашняя лепешка.', img: '' }
+                ]
+            },
+            {
+                category: "Соусы",
+                items: [
+                    { id: 86, name: 'Сацебели', price: 99, desc: 'Шашлычный красный. (50 гр)', img: '' },
+                    { id: 87, name: 'Цехтон', price: 99, desc: 'Чесночный белый. (50 гр)', img: '' },
+                    { id: 88, name: 'Наршараб', price: 130, desc: 'Гранатовый. (50 гр)', img: '' },
+                    { id: 89, name: 'Шрирача', price: 130, desc: 'Острый. (50 гр)', img: '' },
+                    { id: 90, name: 'Кислосладкий / Барбекю / Терияки / Сырный / Сладкий чили', price: 99, desc: '(50 гр)', img: '' }
+                ]
+            },
+            {
+                category: "Напитки и Пиво",
+                items: [
+                    { id: 91, name: 'Морс (0.33 / 1 л)', price: 220/430, desc: 'Домашний ягодный морс.', img: '' },
+                    { id: 92, name: 'Черноголовка (500 мл)', price: 170, desc: 'В ассортименте.', img: '' },
+                    { id: 93, name: 'Минеральная вода (330 мл)', price: 120, desc: 'С газом, без газа.', img: '' }
+                ]
+            },
+            {
+             category: "Маринованное мясо с собой",
+                items: [
+                    { id: 94, name: 'Свиные ребра', price: 699, desc: '(1000 гр)', img: '' },
+                    { id: 95, name: 'Свиная корейка', price: 799, desc: '(1000 гр)', img: '' },
+                    { id: 96, name: 'Шашлык из свиной шеи', price: 899, desc: '(1000 гр)', img: '' },
+                    { id: 97, name: 'Шашлык из свиной вырезки', price: 899, desc: '(1000 гр)', img: '' },
+                    { id: 98, name: 'Шашлык из курицы', price: 699, desc: '(1000 гр)', img: '' },
+                    { id: 99, name: 'Шашлык из индейки(бедро)', price: 899, desc: '(1000 гр)', img: '' },
+                    { id: 100, name: 'Люля-кебаб из курицы', price: 699, desc: '(1000 гр)', img: '' },
+                    { id: 101, name: 'Люля-кебаб из говядины', price: 799, desc: '(1000 гр)', img: '' },
+                    { id: 102, name: 'Люля-кебаб из баранины', price: 1099, desc: '(1000 гр)', img: '' },
+                    { id: 103, name: 'Говяжья печень в жировой сетке', price: 990, desc: '(1000 гр)', img: '' },
+                    { id: 104, name: 'Баранья мякать', price: 2000, desc: '(1000 гр)', img: '' },
+                    { id: 105, name: 'Каре из баранины', price: 2500, desc: '(1000 гр)', img: '' }
+                 ]
+            }
+        ];
+
+        let cart = [];
+
+        // Рендеринг (генерация) меню из массива данных
+        function renderMenu() {
+            const container = document.getElementById('menu-container');
+            container.innerHTML = '';
+
+            MENU_DATA.forEach(cat => {
+                const block = document.createElement('div');
+                block.className = 'category-block';
+
+                let cardsHtml = '';
+                cat.items.forEach(item => {
+                    const imgClass = item.img ? 'item-img active' : 'item-img';
+                    cardsHtml += `
+                        <div class="menu-card">
+                            <img src="${item.img}" class="${imgClass}" alt="${item.name}">
+                            <div class="card-header">
+                                <span class="item-name">${item.name}</span>
+                                <span class="item-price">${item.price}₽</span>
+                            </div>
+                            <p class="item-desc">${item.desc || ''}</p>
+                            <button class="btn-add" onclick="addToCart(${item.id})">Заказать с собой</button>
+                        </div>
+                    `;
+                });
+
+                block.innerHTML = `
+                    <h3 class="category-name">${cat.category}</h3>
+                    <div class="menu-grid">${cardsHtml}</div>
+                `;
+                container.appendChild(block);
+            });
+        }
+
+        // Логика добавления в корзину
+        function addToCart(id) {
+            let foundItem = null;
+            for (let cat of MENU_DATA) {
+                const item = cat.items.find(i => i.id === id);
+                if (item) { foundItem = item; break; }
+            }
+
+            if (!foundItem) return;
+
+            const cartIndex = cart.findIndex(i => i.id === id);
+            if (cartIndex > -1) {
+                cart[cartIndex].qty++;
+            } else {
+                cart.push({ ...foundItem, qty: 1 });
+            }
+            updateCartUI();
+        }
+
+        // Изменение количества внутри корзины
+        function changeQty(id, delta) {
+            const idx = cart.findIndex(i => i.id === id);
+            if (idx === -1) return;
+
+            cart[idx].qty += delta;
+            if (cart[idx].qty <= 0) {
+                cart.splice(idx, 1);
+            }
+            updateCartUI();
+        }
+
+        // Обновление интерфейса корзины и счетчика
+        function updateCartUI() {
+            const countBtn = document.getElementById('cart-count');
+            const itemsContainer = document.getElementById('cart-items-container');
+            const totalSumSpan = document.getElementById('cart-total-sum');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            countBtn.innerText = totalItems;
+
+            itemsContainer.innerHTML = '';
+            let totalSum = 0;
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = '<p style="color:gray; text-align:center; margin-top:20px;">Корзина пуста</p>';
+            } else {
+                cart.forEach(item => {
+                    const itemCost = item.price * item.qty;
+                    totalSum += itemCost;
+
+                    const itemEl = document.createElement('div');
+                    itemEl.className = 'cart-item';
+                    itemEl.innerHTML = `
+                        <div class="cart-item-info">
+                            <div class="cart-item-title">${item.name}</div>
+                            <div style="color:var(--irish-green); font-size:0.9rem;">${item.price}₽ х ${item.qty} = ${itemCost}₽</div>
+                        </div>
+                        <div class="cart-item-controls">
+                            <button class="cart-qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="cart-qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                        </div>
+                    `;
+                    itemsContainer.appendChild(itemEl);
+                });
+            }
+            totalSumSpan.innerText = totalSum;
+        }
+
+        function toggleCartModal(open) {
+            const modal = document.getElementById('cart-modal');
+            if (open) modal.classList.add('active');
+            else modal.classList.remove('active');
+        }
+
+        // Подготовка данных корзины перед отправкой на почту
+        function prepareCheckoutData() {
+            let orderString = cart.map(i => `${i.name} (${i.qty} шт.) — ${i.price * i.qty}руб.`).join('\n');
+            let totalSum = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            
+            document.getElementById('hidden-cart-data').value = orderString;
+            document.getElementById('hidden-cart-total').value = totalSum + ' рублей';
+        }
+
+        // Инициализация при загрузке страницы
+        window.onload = function() {
+            renderMenu();
+        };
+    </script>
+    <script>
+const BOT_TOKEN = '8711192821:AAGv2896xFuGVYSIM-dOCvIaCtpv5Z7nFvs';
+const CHAT_ID = '-7439163881'; // <- Сюда впишите ID вашей группы (с минусом)
+
+// 1. ОБРАБОТКА БРОНИРОВАНИЯ СТОЛА
+document.getElementById('booking-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const btn = document.getElementById('booking-submit-btn');
+    const formData = new FormData(this);
+    
+    btn.disabled = true;
+    btn.innerText = 'Отправка...';
+
+    let text = `📅 *НОВАЯ БРОНЬ СТОЛА*\n\n`;
+    text += `👤 *Имя:* ${formData.get('Имя')}\n`;
+    text += `📞 *Телефон:* ${formData.get('Телефон')}\n`;
+    text += `📆 *Дата:* ${formData.get('Дата')}\n`;
+    text += `⏰ *Время:* ${formData.get('Время')}\n`;
+    text += `👥 *Гости:* ${formData.get('Гостей')}\n`;
+    if(formData.get('Комментарий')) {
+        text += `💬 *Пожелания:* ${formData.get('Комментарий')}\n`;
+    }
+
+    sendTelegram(text, btn, 'Забронировать сейчас', this);
+});
+
+// 2. ОБРАБОТКА ЗАКАЗА ИЗ КОРЗИНЫ
+document.getElementById('checkout-form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // СНАЧАЛА СБИРАЕМ ДАННЫЕ КОРЗИНЫ В СКРЫТЫЕ ПОЛЯ
+    if (typeof prepareCheckoutData === "function") { 
+        prepareCheckoutData(); 
+    }
+    
+    const btn = document.getElementById('checkout-submit-btn');
+    const formData = new FormData(this);
+    
+    const cartItemsText = document.getElementById('hidden-cart-data')?.value || 'См. состав в корзине на сайте';
+    const cartTotalValue = document.getElementById('hidden-cart-total')?.value || 'Не указана';
+
+    btn.disabled = true;
+    btn.innerText = 'Отправка...';
+
+    let text = `🔥 *НОВЫЙ ЗАКАЗ ЕДЫ*\n\n`;
+    text += `👤 *Клиент:* ${formData.get('Клиент_Имя')}\n`;
+    text += `📞 *Телефон:* ${formData.get('Клиент_Телефон')}\n`;
+    text += `───────────────────\n`;
+    text += `📦 *Состав заказа:*\n${cartItemsText}\n`;
+    text += `───────────────────\n`;
+    text += `💰 *Итоговая сумма:* ${cartTotalValue}\n`;
+
+    sendTelegram(text, btn, 'Оформить заказ', this);
+});
+
+// ФУНКЦИЯ ОТПРАВКИ В TELEGRAM
+function sendTelegram(text, button, originalText, form) {
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+    
+    fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            chat_id: CHAT_ID,
+            text: text,
+            parse_mode: 'Markdown'
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            button.innerText = 'Успешно отправлено!';
+            button.style.backgroundColor = '#28a745'; // Кнопка станет зеленой
+            form.reset();
+            setTimeout(() => {
+                button.disabled = false;
+                button.innerText = originalText;
+                button.style.backgroundColor = ''; // Возвращаем исходный цвет кнопки
+            }, 4000);
+        } else {
+            alert('Ошибка отправки. Попробуйте еще раз или свяжитесь по телефону.');
+            button.disabled = false;
+            button.innerText = originalText;
+        }
+    })
+    .catch(() => {
+        alert('Ошибка сети. Проверьте интернет-соединение.');
+        button.disabled = false;
+        button.innerText = originalText;
+    });
+}
+</script>
+</body>
+</html>
