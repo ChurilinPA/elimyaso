@@ -712,13 +712,13 @@ document.getElementById('checkout-form').addEventListener('submit', function(e) 
 
 // ФУНКЦИЯ ОТПРАВКИ В TELEGRAM
 function sendTelegram(text, button, originalText, form) {
-    const url = `https://api.telegram.org/bot${8711192821:AAGv2896xFuGVYSIM-dOCvIaCtpv5Z7nFvs}/sendMessage`;
+    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
     
     fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            chat_id: -7439163881,
+            chat_id: CHAT_ID,
             text: text,
             parse_mode: 'Markdown'
         })
