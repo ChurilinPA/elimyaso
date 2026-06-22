@@ -760,6 +760,15 @@
     })
     .then(response => {
         if (response.ok) {
+
+    if (typeof ym === 'function') {
+        if (isCart) {
+            ym(109705454, 'reachGoal', 'order_sent');
+        } else {
+            ym(109705454, 'reachGoal', 'booking_sent');
+        }
+    }
+
             button.innerText = 'Успешно отправлено!';
             button.style.backgroundColor = '#28a745';
             button.style.color = '#fff';
