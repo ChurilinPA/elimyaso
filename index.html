@@ -663,8 +663,6 @@
     </script>
 
     <script>
-        const BOT_TOKEN = '8711192821:AAHuaJQTuximOliaGkHJaWuA63_Q0LeulSI';
-        const CHAT_ID = '-1003829585999';
 
         // 1. ОБРАБОТКА БРОНИРОВАНИЯ СТОЛА
         document.getElementById('booking-form').addEventListener('submit', function(e) {
@@ -717,48 +715,50 @@
         });
 
         function sendTelegram(text, button, originalText, form, isCart) {
-            const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
-            
-            fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: CHAT_ID,
-                    text: text,
-                    parse_mode: 'Markdown'
-                })
-            })
-            .then(response => {
-                if (response.ok) {
-                    button.innerText = 'Успешно отправлено!';
-                    button.style.backgroundColor = '#28a745';
-                    button.style.color = '#fff';
-                    form.reset();
-                    
-                    if(isCart) {
-                        cart = [];
-                        updateCartUI();
-                        setTimeout(() => { toggleCartModal(false); }, 1500);
-                    }
-                    
-                    setTimeout(() => {
-                        button.disabled = false;
-                        button.innerText = originalText;
-                        button.style.backgroundColor = '';
-                        button.style.color = '';
-                    }, 4000);
-                } else {
-                    alert('Ошибка отправки API. Проверьте, добавлен ли бот в администраторы группы.');
-                    button.disabled = false;
-                    button.innerText = originalText;
-                }
-            })
-            .catch(() => {
-                alert('Ошибка сети. Проверьте интернет-соединение.');
+
+    fetch('https://yelimyaso-api.vercel.app/api/send', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            text: text
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            button.innerText = 'Успешно отправлено!';
+            button.style.backgroundColor = '#28a745';
+            button.style.color = '#fff';
+            form.reset();
+
+            if (isCart) {
+                cart = [];
+                updateCartUI();
+                setTimeout(() => {
+                    toggleCartModal(false);
+                }, 1500);
+            }
+
+            setTimeout(() => {
                 button.disabled = false;
                 button.innerText = originalText;
-            });
+                button.style.backgroundColor = '';
+                button.style.color = '';
+            }, 4000);
+
+        } else {
+            alert('Ошибка отправки.');
+            button.disabled = false;
+            button.innerText = originalText;
         }
+    })
+    .catch(() => {
+        alert('Ошибка соединения.');
+        button.disabled = false;
+        button.innerText = originalText;
+    });
+}
     </script>
 </body>
 </html>
