@@ -573,6 +573,7 @@
 
         function renderMenu() {
             const container = document.getElementById('menu-container');
+            if (!container) return;
             container.innerHTML = '';
 
             MENU_DATA.forEach(cat => {
@@ -581,10 +582,12 @@
 
                 let cardsHtml = '';
                 cat.items.forEach(item => {
-                    const imgClass = item.img ? 'item-img active' : 'item-img';
+                    const imgHtml = item.img 
+                      ? `<img src="${item.img}" class="item-img active" alt="${item.name}" loading="lazy">`
+                      : '';
                     cardsHtml += `
                         <div class="menu-card">
-                            <img src="${item.img}" class="${imgClass}" alt="${item.name}">
+                            ${imgHtml}
                             <div class="card-header">
                                 <span class="item-name">${item.name}</span>
                                 <span class="item-price">${item.price}₽</span>
@@ -691,9 +694,9 @@
             document.getElementById('hidden-cart-total').value = totalSum + ' рублей';
         }
 
-        window.onload = function() {
-            renderMenu();
-        };
+       document.addEventListener('DOMContentLoaded', function () {
+       renderMenu();
+     });
     </script>
 
     <script>
