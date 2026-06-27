@@ -185,7 +185,12 @@
             flex-direction: column;
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
-        .menu-card:hover { border-color: var(--irish-green); background: #f7fcf9; transform: translateY(-3px); box-shadow: 0 8px 15px rgba(11, 49, 30, 0.06); }
+        .menu-card:hover {
+         border-color: var(--text-gold);
+         background: #fffdf7;
+         transform: translateY(-6px);
+         box-shadow: 0 14px 30px rgba(11, 49, 30, 0.12);
+          }
 
         .card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
         .item-name { font-weight: bold; font-size: 1.2rem; color: var(--dark-text); padding-right: 10px; }
@@ -193,6 +198,7 @@
         .item-desc { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 20px; flex-grow: 1; }
         .item-img { width: 100%; height: 180px; object-fit: cover; border-radius: 8px; margin-bottom: 15px; background: #eee; display: none; }
         .item-img.active { display: block; }
+         .menu-card:hover .item-img { transform: scale(1.04);}
 
         .btn-add {
             background: transparent;
