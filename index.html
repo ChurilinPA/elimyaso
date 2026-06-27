@@ -755,24 +755,24 @@
             btn.disabled = true;
             btn.innerText = 'Отправка...';
 
-            let text = `🔥 *НОВЫЙ ЗАКАЗ ЕДЫ*\n\n`;
+           let text = `🔥 НОВЫЙ ЗАКАЗ ЕДЫ\n\n`;
 
-text += `👤 *Клиент:* ${formData.get('Клиент_Имя') || 'Не указано'}\n`;
-text += `📞 *Телефон:* ${formData.get('Клиент_Телефон') || 'Не указан'}\n`;
-text += `📍 *Адрес доставки:* ${formData.get('Клиент_Адрес') || 'Не указан'}\n`;
+text += `👤 Клиент: ${formData.get('Клиент_Имя') || 'Не указано'}\n`;
+text += `📞 Телефон: ${formData.get('Клиент_Телефон') || 'Не указан'}\n`;
+text += `📍 Адрес доставки: ${formData.get('Клиент_Адрес') || 'Не указан'}\n`;
 
 const noCall = formData.get('Не_перезванивать') === 'Да'
   ? 'Не перезванивать'
   : 'Перезвонить клиенту';
 
-text += `☎️ *Подтверждение:* ${noCall}\n`;
-text += `💬 *Пожелания:* ${formData.get('Комментарий') || 'Нет'}\n\n`;
+text += `☎️ Подтверждение: ${noCall}\n`;
+text += `💬 Пожелания: ${formData.get('Комментарий') || 'Нет'}\n\n`;
 
-text += `───────────────────\n`;
-text += `📦 *Состав заказа:*\n${cartItemsText}\n`;
-text += `───────────────────\n`;
-text += `💰 *Итоговая сумма:* ${cartTotalValue}\n`;
-            sendTelegram(text, btn, 'Оформить заказ', this, true);
+text += `-------------------\n`;
+text += `📦 Состав заказа:\n${cartItemsText}\n`;
+text += `-------------------\n`;
+text += `💰 Итоговая сумма: ${cartTotalValue}\n`;
+sendTelegram(text, btn, 'Оформить заказ', this, true);
         });
 
         function sendTelegram(text, button, originalText, form, isCart) {
