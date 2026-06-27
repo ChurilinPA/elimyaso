@@ -52,20 +52,26 @@
 
         /* HEADER */
       header {
-    min-height: 92vh;
+    min-height: 96vh;
     background:
-        linear-gradient(90deg, rgba(11, 49, 30, 0.95) 0%, rgba(11, 49, 30, 0.75) 40%, rgba(11, 49, 30, 0.15) 100%),
+        linear-gradient(
+               90deg, 
+             rgba(11, 49, 30, 0.82) 0%, 
+             rgba(11, 49, 30, 0.55) 40%, 
+             rgba(11, 49, 30, 0.02) 100%
+        ),
         url('/images/hero.webp') center/cover no-repeat;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: flex-start;
     text-align: left;
     border-bottom: 5px solid var(--text-gold);
-    padding: 0 8%;
+    padding: 120px 8% 80px;
+    max-width: 700px;
 }
 
-        .logo-area h1 { font-size: clamp(3rem, 10vw, 6rem); color: white; line-height: 1; }
+        .logo-area h1 { font-size: clamp(3rem, 10vw, 6rem); color: white; line-height: 1; margin-bottom: 25px; }
         .logo-area span { color: var(--text-gold); }
         .subtitle { font-size: 1.2rem; letter-spacing: 5px; margin: 20px 0 40px; color: white; opacity: 0.9; }
 
@@ -73,7 +79,7 @@
     display: flex;
     gap: 18px;
     flex-wrap: wrap;
-    margin: 25px 0 35px;
+    margin:35px 0 45px;
     color: white;
     font-weight: bold;
 }
