@@ -141,7 +141,32 @@
             border-bottom: 2px solid var(--text-gold);
             padding-bottom: 10px;
         }
+          .menu-search-wrap {
+    max-width: 600px;
+    margin: 0 auto 40px;
+}
 
+#menu-search {
+    width: 100%;
+    padding: 16px 20px;
+    border: 2px solid var(--border-color);
+    border-radius: 12px;
+    font-size: 1rem;
+    background: #fff;
+    color: var(--dark-text);
+    box-shadow: 0 8px 20px rgba(11, 49, 30, 0.06);
+}
+
+#menu-search:focus {
+    border-color: var(--text-gold);
+    box-shadow: 0 8px 25px rgba(197, 160, 89, 0.18);
+}
+         .menu-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -352,6 +377,14 @@
 
     <section id="menu" class="section container">
         <h2 class="section-title">Наше <span>Меню</span></h2>
+         <div class="menu-search-wrap">
+    <input
+        type="text"
+        id="menu-search"
+        placeholder="🔍 Найти блюдо: шашлык, ребра, морс..."
+        autocomplete="off"
+    >
+</div>
         <div id="menu-container">
             </div>
     </section>
@@ -652,41 +685,65 @@
 
         let cart = [];
 
-        function renderMenu() {
-            const container = document.getElementById('menu-container');
-            if (!container) return;
-            container.innerHTML = '';
+       function renderMenu(searchText = '') {
+    const container = document.getElementById('menu-container');
+    if (!container) return;
 
-            MENU_DATA.forEach(cat => {
-                const block = document.createElement('div');
-                block.className = 'category-block';
+    container.innerHTML = '';
 
-                let cardsHtml = '';
-                cat.items.forEach(item => {
-                    const imgHtml = item.img 
-                      ? `<img src="${item.img}" class="item-img active" alt="${item.name}" loading="lazy">`
-                      : '';
-                    cardsHtml += `
-                        <div class="menu-card">
-                            ${imgHtml}
-                            <div class="card-header">
-                                <span class="item-name">${item.name}</span>
-                                <span class="item-price">${item.price}₽</span>
-                            </div>
-                            <p class="item-desc">${item.desc || ''}</p>
-                            <button class="btn-add" onclick="addToCart(${item.id})">Заказать с собой</button>
-                        </div>
-                    `;
-                });
+    const query = searchText.trim().toLowerCase();
+    let hasResults = false;
 
-                block.innerHTML = `
-                    <h3 class="category-name">${cat.category}</h3>
-                    <div class="menu-grid">${cardsHtml}</div>
-                `;
-                container.appendChild(block);
-            });
-        }
+    MENU_DATA.forEach(cat => {
+        const filteredItems = cat.items.filter(item => {
+            const name = item.name.toLowerCase();
+            const desc = (item.desc || '').toLowerCase();
+            return !query || name.includes(query) || desc.includes(query);
+        });
 
+        if (filteredItems.length === 0) return;
+
+        hasResults = true;
+
+        const block = document.createElement('div');
+        block.className = 'category-block';
+
+        let cardsHtml = '';
+
+        filteredItems.forEach(item => {
+            const imgHtml = item.img
+                ? `<img src="${item.img}" class="item-img active" alt="${item.name}" loading="lazy">`
+                : '';
+
+            cardsHtml += `
+                <div class="menu-card">
+                    ${imgHtml}
+                    <div class="card-header">
+                        <span class="item-name">${item.name}</span>
+                        <span class="item-price">${item.price}₽</span>
+                    </div>
+                    <p class="item-desc">${item.desc || ''}</p>
+                    <button class="btn-add" onclick="addToCart(${item.id})">Заказать с собой</button>
+                </div>
+            `;
+        });
+
+        block.innerHTML = `
+            <h3 class="category-name">${cat.category}</h3>
+            <div class="menu-grid">${cardsHtml}</div>
+        `;
+
+        container.appendChild(block);
+    });
+
+    if (!hasResults) {
+        container.innerHTML = `
+            <div class="menu-empty">
+                Ничего не найдено. Попробуйте написать иначе.
+            </div>
+        `;
+    }
+}
         function addToCart(id) {
             let foundItem = null;
             for (let cat of MENU_DATA) {
@@ -776,7 +833,16 @@
         }
 
        document.addEventListener('DOMContentLoaded', function () {
-       renderMenu();
+    renderMenu();
+
+    const searchInput = document.getElementById('menu-search');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function () {
+            renderMenu(this.value);
+        });
+    }
+});
      });
     </script>
 
