@@ -405,6 +405,17 @@
     40% { transform: scale(1.15); }
     100% { transform: scale(1); }
 }
+  .delivery-progress {
+    background: #e3ebe7;
+    color: var(--irish-green);
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.95rem;
+    font-weight: bold;
+    margin-bottom: 15px;
+    border: 1px solid rgba(197, 160, 89, 0.35);
+}       
 </style>
 </head>
 <body>
@@ -547,9 +558,9 @@
                 <h3 style="font-family: 'Oswald'; font-size: 1.5rem;">Ваш заказ</h3>
                 <span class="cart-close" onclick="toggleCartModal(false)">&times;</span>
             </div>
-            <div style="background: #e3ebe7; color: var(--irish-green); padding: 10px; border-radius: 5px; text-align: center; font-size: 0.9rem; font-weight: bold; margin-bottom: 15px;">
-                🚚 Бесплатная доставка при сумме заказа от 3000₽
-            </div>
+            <div class="delivery-progress" id="delivery-progress">
+                   🚚 Бесплатная доставка от 3000 ₽
+          </div>
             <div class="cart-items-list" id="cart-items-container">
                 </div>
 
@@ -861,6 +872,7 @@
             const countBtn = document.getElementById('cart-count');
             const itemsContainer = document.getElementById('cart-items-container');
             const totalSumSpan = document.getElementById('cart-total-sum');
+             const deliveryProgress = document.getElementById('delivery-progress');
 
             const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
             countBtn.innerText = totalItems;
@@ -892,7 +904,19 @@
                 });
             }
             totalSumSpan.innerText = totalSum;
-            
+
+             if (deliveryProgress) {
+    const freeDeliveryLimit = 3000;
+    const leftToFree = freeDeliveryLimit - totalSum;
+
+    if (cart.length === 0) {
+        deliveryProgress.innerText = '🚚 Бесплатная доставка от 3000 ₽';
+    } else if (leftToFree > 0) {
+        deliveryProgress.innerText = `🚚 До бесплатной доставки осталось ${leftToFree} ₽`;
+    } else {
+        deliveryProgress.innerText = '🎉 Бесплатная доставка!';
+    }
+}
             // Автоматически подготавливаем скрытые поля при каждом изменении корзины
             prepareCheckoutData();
         }
