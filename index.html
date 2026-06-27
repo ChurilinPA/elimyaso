@@ -51,21 +51,40 @@
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
         /* HEADER */
-        header {
-            height: 80vh;
-            background: linear-gradient(rgba(11, 49, 30, 0.8), rgba(11, 49, 30, 0.85)),
-                        url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&q=80&w=1469') center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-bottom: 5px solid var(--text-gold);
-        }
+      header {
+    min-height: 92vh;
+    background:
+        linear-gradient(90deg, rgba(11, 49, 30, 0.95) 0%, rgba(11, 49, 30, 0.75) 40%, rgba(11, 49, 30, 0.15) 100%),
+        url('/images/hero.webp') center/cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    text-align: left;
+    border-bottom: 5px solid var(--text-gold);
+    padding: 0 8%;
+}
 
         .logo-area h1 { font-size: clamp(3rem, 10vw, 6rem); color: white; line-height: 1; }
         .logo-area span { color: var(--text-gold); }
         .subtitle { font-size: 1.2rem; letter-spacing: 5px; margin: 20px 0 40px; color: white; opacity: 0.9; }
+
+         .hero-benefits {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+    margin: 25px 0 35px;
+    color: white;
+    font-weight: bold;
+}
+
+.hero-benefits div {
+    background: rgba(0, 0, 0, 0.35);
+    border: 1px solid rgba(197, 160, 89, 0.5);
+    padding: 10px 16px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
+}
 
         .header-btns { display: flex; gap: 20px; flex-wrap: wrap; justify-content: center; }
 
@@ -262,16 +281,23 @@
 </head>
 <body>
 
-    <header id="home">
-        <div class="logo-area">
-            <h1>ЕЛИ <span>МЯСО</span> МУЖИКИ</h1>
-            <p class="subtitle">ГРИЛЬ-БАР С ХАРАКТЕРОМ • ЛУЧШЕЕ МЯСО В ГОРОДЕ САМАРА •</p>
+<header id="home">
+    <div class="logo-area">
+        <h1>ЕЛИ <span>МЯСО</span> МУЖИКИ</h1>
+        <p class="subtitle">Гриль-бар с характером • доставка по Самаре • живой огонь</p>
+
+        <div class="hero-benefits">
+            <div>🔥 Живой огонь</div>
+            <div>🥩 Свежее мясо</div>
+            <div>🚚 Бесплатная доставка от 3000 ₽</div>
         </div>
+
         <div class="header-btns">
             <a href="#menu" class="btn btn-red">Посмотреть меню</a>
-            <a href="#booking" class="btn btn-outline">Забронировать стол</a>
+            <a href="#menu" class="btn btn-outline">Заказать доставку</a>
         </div>
-    </header>
+    </div>
+</header>
 
     <nav class="main-nav">
         <div class="container nav-content">
