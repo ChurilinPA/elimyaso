@@ -78,10 +78,11 @@ header::before {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 88% 30%, rgba(255, 120, 20, 0.45), transparent 28%),
-        radial-gradient(circle at 78% 72%, rgba(255, 60, 0, 0.38), transparent 32%),
-        radial-gradient(circle at 70% 85%, rgba(255, 180, 40, 0.28), transparent 26%);
-    animation: fireGlow 1.8s ease-in-out infinite;
+        radial-gradient(circle at 85% 82%, rgba(255, 75, 0, 0.45), transparent 20%),
+        radial-gradient(circle at 78% 78%, rgba(255, 140, 25, 0.35), transparent 18%),
+        radial-gradient(circle at 92% 70%, rgba(255, 35, 0, 0.28), transparent 22%),
+        radial-gradient(circle at 88% 30%, rgba(255, 120, 20, 0.35), transparent 28%);
+    animation: coalGlow 2.4s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
 }
@@ -414,16 +415,18 @@ header::after {
             animation: heroTextShow 1s ease forwards;
         }
 
-        @keyframes heroTextShow {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+@keyframes coalGlow {
+    0%, 100% {
+        opacity: 0.45;
+        transform: scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        opacity: 0.95;
+        transform: scale(1.03);
+        filter: brightness(1.25);
+    }
+}
 
         .btn-red {
             box-shadow: 0 8px 25px rgba(197, 160, 89, 0.35);
