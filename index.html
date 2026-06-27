@@ -395,7 +395,7 @@
                 Итого: <span id="cart-total-sum">0</span>₽
             </div>
 
-            <form id="checkout-form">
+           
                 <input type="hidden" name="Состав_Заказа" id="hidden-cart-data">
                 <input type="hidden" name="Итоговая_Сумма" id="hidden-cart-total">
                 <div style="margin-bottom: 12px;">
@@ -404,7 +404,22 @@
                 <div style="margin-bottom: 15px;">
     <input type="tel" name="Клиент_Телефон" placeholder="Телефон для подтверждения" required style="padding: 8px;">
 </div>
-
+<div style="margin-bottom: 15px;">
+    <input type="text" name="Клиент_Адрес" placeholder="Адрес доставки: улица, дом, подъезд, квартира" required style="padding: 8px;">
+</div>
+<div style="margin-bottom:15px;">
+    <textarea
+        name="Комментарий"
+        placeholder="Пожелания к заказу (без лука, домофон 25, сдача с 5000 ₽ и т.д.)"
+        rows="3"
+        style="padding:8px; width:100%; resize:vertical;"></textarea>
+     <div style="margin-bottom:15px; font-size:14px; color:#555;">
+    <label style="display:flex; align-items:flex-start; gap:8px; font-weight:normal;">
+        <input type="checkbox" name="Не_перезванивать" value="Да" style="width:auto; margin-top:4px;">
+        <span>Не перезванивать для подтверждения заказа</span>
+    </label>
+</div>
+</div>        
 <div style="margin-bottom:15px; font-size:13px; color:#555;">
     <label style="display:flex; align-items:flex-start; gap:8px; font-weight:normal;">
         <input type="checkbox" required style="width:auto; margin-top:4px;">
@@ -741,12 +756,19 @@
             btn.innerText = 'Отправка...';
 
             let text = `🔥 *НОВЫЙ ЗАКАЗ ЕДЫ*\n\n`;
-            text += `👤 *Клиент:* ${formData.get('Клиент_Имя')}\n`;
-            text += `📞 *Телефон:* ${formData.get('Клиент_Телефон')}\n`;
-            text += `───────────────────\n`;
-            text += `📦 *Состав заказа:*\n${cartItemsText}\n`;
-            text += `───────────────────\n`;
-            text += `💰 *Итоговая сумма:* ${cartTotalValue}\n`;
+text += `👤 *Клиент:* ${formData.get('Клиент_Имя')}\n`;
+text += `📞 *Телефон:* ${formData.get('Клиент_Телефон')}\n`;
+text += `📍 *Адрес доставки:* ${formData.get('Клиент_Адрес')}\n`;
+text += `☎️ *Подтверждение:* ${
+  formData.get('Не_перезванивать') === 'Да'
+    ? 'Не перезванивать'
+    : 'Перезвонить клиенту'
+}\n`;
+text += `💬 *Пожелания:* ${formData.get('Комментарий') || 'Нет'}\n`;
+text += `───────────────────\n`;
+text += `📦 *Состав заказа:*\n${cartItemsText}\n`;
+text += `───────────────────\n`;
+text += `💰 *Итоговая сумма:* ${cartTotalValue}\n`;
 
             sendTelegram(text, btn, 'Оформить заказ', this, true);
         });
