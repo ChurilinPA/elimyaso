@@ -78,22 +78,25 @@ header::before {
     position: absolute;
     inset: 0;
     background:
-        radial-gradient(circle at 80% 35%, rgba(255, 120, 20, 0.18), transparent 25%),
-        radial-gradient(circle at 72% 70%, rgba(255, 70, 0, 0.20), transparent 28%);
-    animation: fireGlow 2.8s ease-in-out infinite;
+        radial-gradient(circle at 88% 30%, rgba(255, 120, 20, 0.45), transparent 28%),
+        radial-gradient(circle at 78% 72%, rgba(255, 60, 0, 0.38), transparent 32%),
+        radial-gradient(circle at 70% 85%, rgba(255, 180, 40, 0.28), transparent 26%);
+    animation: fireGlow 1.8s ease-in-out infinite;
     pointer-events: none;
     z-index: 1;
 }
 header::after {
     content: "";
     position: absolute;
-    inset: 0;
+    inset: -10%;
     background:
-        radial-gradient(circle at 70% 25%, rgba(255,255,255,0.12), transparent 18%),
-        radial-gradient(circle at 58% 35%, rgba(255,255,255,0.08), transparent 22%);
-    animation: smokeMove 7s ease-in-out infinite;
+        radial-gradient(circle at 62% 28%, rgba(255,255,255,0.28), transparent 16%),
+        radial-gradient(circle at 55% 42%, rgba(255,255,255,0.18), transparent 20%),
+        radial-gradient(circle at 72% 20%, rgba(255,255,255,0.16), transparent 18%);
+    animation: smokeMove 5s ease-in-out infinite;
     pointer-events: none;
     z-index: 2;
+    mix-blend-mode: screen;
 }
 
 .logo-area {
