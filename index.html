@@ -526,7 +526,26 @@ header::after {
     50% {
         background-size: 104%;
     }
-}        
+}
+.btn-add.adding {
+    animation: addButtonPulse 0.45s ease;
+    background: var(--text-gold);
+    color: #000;
+    border-color: var(--text-gold);
+}
+
+@keyframes addButtonPulse {
+    0% {
+        transform: scale(1);
+    }
+    40% {
+        transform: scale(0.96);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+         
 </style>
 </head>
 <body>
@@ -913,7 +932,7 @@ header::after {
                         <span class="item-price">${item.priceText || item.price}₽</span>
                     </div>
                     <p class="item-desc">${item.desc || ''}</p>
-                    <button class="btn-add" onclick="addToCart(${item.id})">Заказать с собой</button>
+                    <button class="btn-add" onclick="addToCart(${item.id}, this)">Заказать с собой</button>
                 </div>
             `;
         });
@@ -953,7 +972,7 @@ header::after {
         cartBtn.classList.add('bump');
     }
 }       
-        function addToCart(id) {
+        function addToCart(id, button = null) {
             let foundItem = null;
             for (let cat of MENU_DATA) {
                 const item = cat.items.find(i => i.id === id);
@@ -970,6 +989,14 @@ header::after {
             }
             updateCartUI();
              showToast();
+             if (button) {
+    button.classList.remove('adding');
+    void button.offsetWidth;
+    button.classList.add('adding');
+    setTimeout(() => {
+        button.classList.remove('adding');
+    }, 500);
+}
         }
 
         function changeQty(id, delta) {
